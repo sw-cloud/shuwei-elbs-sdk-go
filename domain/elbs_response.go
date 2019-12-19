@@ -1,6 +1,6 @@
 package domain
 
-import "shuwei-elbs-sdk-go/constant"
+import "github.com/sw-cloud/shuwei-elbs-sdk-go/constant"
 
 /**
  * ELBS响应信息

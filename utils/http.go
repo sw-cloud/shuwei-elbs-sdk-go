@@ -2,9 +2,9 @@ package utils
 
 import (
 	"bytes"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/log"
 	"io/ioutil"
 	"net/http"
-	"shuwei-elbs-sdk-go/log"
 )
 
 func HttpPost(url string, reqBody []byte, authorization string) ([]byte, error) {
@@ -22,7 +22,7 @@ func HttpPost(url string, reqBody []byte, authorization string) ([]byte, error) 
 		log.Errorf("http post: %v\n", err)
 		return nil, err
 	}
-	defer  resp.Body.Close()
+	defer resp.Body.Close()
 
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

@@ -3,7 +3,7 @@ package domain
 /*
 **
 * gps信息
-*/
+ */
 type GpsInfo struct {
 	SatelliteInfo            []SatelliteInfo `json:"satelliteInfo,omitempty"`             //卫星信息
 	Provider                 string          `json:"mProvider,omitempty"`                 //获取是网络定位、GPS定位还是被动定位

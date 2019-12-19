@@ -3,7 +3,7 @@ package domain
 import (
 	"encoding/base64"
 	"fmt"
-	"shuwei-elbs-sdk-go/utils"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/utils"
 	"strconv"
 	"strings"
 )

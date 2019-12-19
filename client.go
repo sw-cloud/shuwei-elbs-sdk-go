@@ -3,10 +3,10 @@ package shuwei_elbs_sdk_go
 import (
 	"encoding/base64"
 	"encoding/json"
-	"shuwei-elbs-sdk-go/constant"
-	"shuwei-elbs-sdk-go/domain"
-	"shuwei-elbs-sdk-go/log"
-	"shuwei-elbs-sdk-go/utils"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/constant"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/domain"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/log"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/utils"
 	"strings"
 )
 
@@ -48,23 +48,23 @@ func (this *ELBSClient) Location(elbsRequest *domain.ELBSRequest) (locateResp *d
 
 	locationRequest := domain.NewLocationFromRequestData(elbsRequest, this.elbsProfile.AppId, this.elbsProfile.AppKey)
 	requestBody, err := json.Marshal(locationRequest)
-	if err != nil{
+	if err != nil {
 		log.Errorf("locationRequest to json: %v\n", err.Error())
 		return domain.NewELBSResponse(constant.PARAMS_FORMAT_ERROR)
 	}
 
 	appKeyTmp := strings.ReplaceAll(this.elbsProfile.AppKey, "-", "")
-	sKey :=  appKeyTmp[0: LENGTH_OF_ENCRYPT_KEY]
-	ivP := appKeyTmp[LENGTH_OF_ENCRYPT_KEY:LENGTH_OF_ENCRYPT_KEY * 2]
+	sKey := appKeyTmp[0:LENGTH_OF_ENCRYPT_KEY]
+	ivP := appKeyTmp[LENGTH_OF_ENCRYPT_KEY : LENGTH_OF_ENCRYPT_KEY*2]
 
-	encryptedBody,  err := utils.AesCBCEncrypt(requestBody, []byte(sKey), []byte(ivP))
- 	if err != nil{
- 		log.Errorf("encrypt request data error: %v\n", err)
+	encryptedBody, err := utils.AesCBCEncrypt(requestBody, []byte(sKey), []byte(ivP))
+	if err != nil {
+		log.Errorf("encrypt request data error: %v\n", err)
 		return domain.NewELBSResponse(constant.PARAMS_FORMAT_ERROR)
 	}
 
-	respBody , err := utils.HttpPost(this.elbsProfile.Url, []byte(base64.StdEncoding.EncodeToString(encryptedBody)),  locationRequest.Authorization)
-	if err != nil{
+	respBody, err := utils.HttpPost(this.elbsProfile.Url, []byte(base64.StdEncoding.EncodeToString(encryptedBody)), locationRequest.Authorization)
+	if err != nil {
 		log.Errorf("httpPost|%v\n", constant.SERVER_ERROR.RetCode)
 		return domain.NewELBSResponse(constant.SERVER_ERROR)
 	}
@@ -72,20 +72,20 @@ func (this *ELBSClient) Location(elbsRequest *domain.ELBSRequest) (locateResp *d
 
 	response := domain.ELBSResponse{}
 	err = json.Unmarshal(respBody, &response)
-	if err != nil{
+	if err != nil {
 		data, err := base64.StdEncoding.DecodeString(string(respBody))
-		if err != nil{
+		if err != nil {
 			log.Errorf("base64 decode|%v\n", err)
 			return domain.NewELBSResponse(constant.SERVER_ERROR)
 		}
 
 		decryptedData, err := utils.AesCBCDecrypt(data, []byte(sKey), []byte(ivP))
-		if err != nil{
+		if err != nil {
 			log.Errorf("decrypted |%v\n", err)
 			return domain.NewELBSResponse(constant.SERVER_ERROR)
 		}
 		err = json.Unmarshal(decryptedData, &response)
-		if err != nil{
+		if err != nil {
 			log.Errorf("decrypted data|%v\n", decryptedData)
 			log.Errorf("decrypted data raw|%v\n", string(decryptedData))
 			return domain.NewELBSResponse(constant.SERVER_ERROR)
@@ -93,4 +93,3 @@ func (this *ELBSClient) Location(elbsRequest *domain.ELBSRequest) (locateResp *d
 	}
 	return &response
 }
-

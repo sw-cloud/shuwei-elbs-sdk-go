@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"shuwei-elbs-sdk-go/utils"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/utils"
 	"strconv"
 )
 

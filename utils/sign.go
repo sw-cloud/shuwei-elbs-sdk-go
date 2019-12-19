@@ -8,7 +8,7 @@ import (
 )
 
 //签名
-func Sign(params map[string]string, appKey string )  string {
+func Sign(params map[string]string, appKey string) string {
 	keys := []string{}
 	for key := range params {
 		keys = append(keys, key)

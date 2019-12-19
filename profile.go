@@ -1,9 +1,9 @@
 package shuwei_elbs_sdk_go
 
 import (
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/constant"
+	"github.com/sw-cloud/shuwei-elbs-sdk-go/utils"
 	"regexp"
-	"shuwei-elbs-sdk-go/constant"
-	"shuwei-elbs-sdk-go/utils"
 )
 
 type ELBSProfile struct {

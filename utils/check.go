@@ -2,7 +2,7 @@ package utils
 
 import "strings"
 
-func IsEmptyString(str string) bool  {
+func IsEmptyString(str string) bool {
 	if strings.TrimSpace(str) == "" {
 		return true
 	}

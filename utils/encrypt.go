@@ -8,10 +8,10 @@ import (
 )
 
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext) % blockSize
+	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	ciphertext = append(ciphertext, padtext...)
-	return  ciphertext
+	return ciphertext
 }
 
 func PKCS7UnPadding(origData []byte) []byte {
@@ -39,8 +39,8 @@ func AesCBCDecrypt(crypted, key, iv []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	if len(crypted) % block.BlockSize() != 0 {
-		return  nil, errors.New("AesCBCDecrypt input data error")
+	if len(crypted)%block.BlockSize() != 0 {
+		return nil, errors.New("AesCBCDecrypt input data error")
 	}
 
 	blockMode := cipher.NewCBCDecrypter(block, iv)
