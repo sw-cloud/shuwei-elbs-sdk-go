@@ -17,7 +17,7 @@ type ELBSRequest struct {
 	Ext             string           `json:"ext,omitempty"`             // 扩展参数
 	Passthrough     string           `json:"passthrough,omitempty"`     // 透传信息,在响应时原样返回
 	Signals         []*WifiItem      `json:"signals"`                   // wifi列表
-	BaseStations    []*BaseStation   `json:"baseStations,omitempty"`    // 基站信息
+	BaseStations    []*BaseStation   `json:"baseStationList,omitempty"` // 基站信息
 	DeviceInfo      *DeviceInfo      `json:"deviceInfo,omitempty"`      // 设备信息
 	AppInfo         []*AppInfo       `json:"appInfo,omitempty"`         // 应用信息
 	BluetoothInfo   []*BluetoothInfo `json:"bluetoothInfo,omitempty"`   // 蓝牙信息
